@@ -1,15 +1,20 @@
 package com.test.cm2.Model;
 
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+//import jakarta.validation.constraints.NotBlank;
+//import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
 
+import java.util.List;
+
 @Entity
 @Getter
 @Setter
-@Table(name = "tbl_country", uniqueConstraints = @UniqueConstraint(name = "COUNTRY_UQ_TITLE", columnNames = "title"))
+@Table(name = "country")
 public class CountryModel {
 
     @Id
@@ -18,18 +23,24 @@ public class CountryModel {
     private Long id;
 
     @NonNull
-    @Column(nullable = false)
-    private String Title;
+    @Column(name = "title",nullable = false)
+    private String title;
 
     @NonNull
-    @Column(nullable = false)
+    @Column(name = "latin_title",nullable = false)
     private String latinTitle;
 
     @NonNull
-    @Column(nullable = false)
-    private String Description;
+    @Column(name ="description",nullable = false)
+    private String description;
 
-    @NonNull
-    @Column(nullable = false)
-    private boolean isActive;
+//    @NonNull
+//    @Column(name="is_active",nullable = false)
+//    private Boolean isActive;
+    @JsonManagedReference
+    @OneToMany(mappedBy = "country")
+    private List<StateModel> states;
 }
+
+
+

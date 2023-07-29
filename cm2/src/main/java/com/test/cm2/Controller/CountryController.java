@@ -1,22 +1,27 @@
 package com.test.cm2.Controller;
 
 import com.test.cm2.DTO.CountryDTO;
+import com.test.cm2.Model.CountryModel;
 import com.test.cm2.Service.CountryService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
-@RequestMapping("/countries")
-//@RequiredArgsConstructor
+@RequestMapping("/country")
+@RequiredArgsConstructor
 public class CountryController {
 
-    @Autowired
-    CountryService countryService;
+
+
+//    @Autowired
+    private  final CountryService countryService;
 //    private final CountryService countryService;
 
 //    @Autowired
@@ -25,7 +30,7 @@ public class CountryController {
 //    }
 
 //
-//    public CountryControlller(CountryServiceClass countryService) {
+//    public CountryController(CountryServiceClass countryService) {
 //        this.countryService = countryService;
 //
 //    }
@@ -33,7 +38,7 @@ public class CountryController {
 //    public void setCountryService(CountryService countryService) {
 //        this.countryService = countryService;
 //    }
-    /*
+
     @PostMapping
     public ResponseEntity<CountryDTO> createCountry(@RequestBody CountryDTO countryDTO) {
         CountryDTO createdCountry = countryService.createCountry(countryDTO);
@@ -45,7 +50,7 @@ public class CountryController {
         CountryDTO countryDTO = countryService.getCountryById(id);
         return ResponseEntity.ok(countryDTO);
     }
-    */
+
 
     @GetMapping
     public ResponseEntity<List<CountryDTO>> getAllCountries() {
@@ -54,17 +59,28 @@ public class CountryController {
 //    	return ResponseEntity.ok("salam");
     }
 
-    /*
+
     @PutMapping("/{id}")
     public ResponseEntity<CountryDTO> updateCountry(@PathVariable Long id, @RequestBody CountryDTO countryDTO) {
         CountryDTO updatedCountry = countryService.updateCountry(id, countryDTO);
         return ResponseEntity.ok(updatedCountry);
     }
 
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteCountry(@PathVariable Long id) {
         countryService.deleteCountry(id);
         return ResponseEntity.noContent().build();
     }
-    */
+
+    @GetMapping("/search")
+    public List<CountryModel> getCountriesByCriteria(
+            @RequestParam String fieldName,
+            @RequestParam String operator,
+            @RequestParam String value) {
+        return countryService.getCountriesByCriteria(fieldName, operator, value);
+    }
+
 }
+
+
