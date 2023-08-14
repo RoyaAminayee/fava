@@ -8,6 +8,11 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
+import org.hibernate.envers.Audited;
+import org.hibernate.envers.NotAudited;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.util.List;
 
@@ -15,7 +20,17 @@ import java.util.List;
 @Getter
 @Setter
 @Table(name = "country")
+@Audited
+@EntityListeners(AuditingEntityListener.class)
 public class CountryModel {
+
+    @Column(name = "created_date", nullable = false, updatable = false)
+    @CreatedDate
+    private Long createdDate;
+
+    @Column(name = "modified_date")
+    @LastModifiedDate
+    private Long modifiedDate;
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_country")
@@ -39,6 +54,7 @@ public class CountryModel {
 //    private Boolean isActive;
     @JsonManagedReference
     @OneToMany(mappedBy = "country")
+    @NotAudited
     private List<StateModel> states;
 }
 

@@ -1,43 +1,40 @@
 package com.test.cm2.Service;
-
-import com.test.cm2.DTO.CityDTO;
 import com.test.cm2.DTO.CountryDTO;
-import com.test.cm2.DTO.StateDTO;
 import com.test.cm2.Mapper.CountryMapper;
-import com.test.cm2.Mapper.StateMapper;
-import com.test.cm2.Model.City;
 import com.test.cm2.Model.CountryModel;
-import com.test.cm2.Model.StateModel;
-import com.test.cm2.Repository.CityRepository;
 import com.test.cm2.Repository.CountryRepository;
-import com.test.cm2.Repository.StateRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
-
-
+//
+//
 @Service
 @RequiredArgsConstructor
+//public class CountryService extends GenericService<CountryDTO,Long> {
 public class CountryService {
 
     private final CountryRepository countryRepository;
     private final CountryMapper countryMapper;
+//    private final GenericService genericService;
 
-    public List<CountryModel> getCountriesByCriteria(String fieldName, String operator, String value) {
-        Specification<CountryModel> spec = (root, query, criteriaBuilder) -> {
-            if (operator.equals("equal")) {
-                return criteriaBuilder.equal(root.get(fieldName), value);
-            } else if (operator.equals("contains")) {
-                return criteriaBuilder.like(criteriaBuilder.lower(root.get(fieldName)), "%" + value.toLowerCase() + "%");
-            }
-            // Add more conditions as needed for other operators
-            return null;
-        };
-        return countryRepository.findAll(spec);
-    }
+
+//    public List<CountryModel> getCountriesByCriteria(String fieldName, String operator, String value) {
+//        Specification<CountryModel> spec = (root, query, criteriaBuilder) -> {
+//            if (operator.equals("equal")) {
+//                return criteriaBuilder.equal(root.get(fieldName), value);
+//            } else if (operator.equals("contains")) {
+//                return criteriaBuilder.like(criteriaBuilder.lower(root.get(fieldName)), "%" + value.toLowerCase() + "%");
+//            }
+//            return null;
+//        };
+//        return countryRepository.findAll(spec);
+//    }
 
 
 //    Specification<Product> nameLike =
@@ -53,17 +50,24 @@ public class CountryService {
 
 
 
-    public CountryDTO getCountryById(Long id) {
-        CountryModel countryModel = countryRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Country not found with ID: " + id));
-        return countryMapper.toDTO(countryModel);
-    }
+//    public CountryDTO getCountryById(Long id) {
+//        CountryModel countryModel = countryRepository.findById(id)
+//                .orElseThrow(() -> new EntityNotFoundException("Country not found with ID: " + id));
+//        return countryMapper.toDTO(countryModel);
+//    }
 
 //    public CountryServiceClass() {
 //
 //    }
 
 
+
+//    public Page<CountryDTO> getAllCountries(Pageable pageable) {
+//        Page<CountryModel> countryPage = countryRepository.findAll(pageable);
+//        return countryPage.map(countryMapper::toDTO);
+//    }
+
+//
     public List<CountryDTO> getAllCountries() {
         List<CountryModel> countryModels = countryRepository.findAll();
 //        return countryModels;
@@ -79,6 +83,16 @@ public class CountryService {
 
 
 
+//    public CountryDTO updateCountry(Long id, CountryDTO countryDTO) {
+//        CountryModel countryModel = countryRepository.findById(id)
+//                .orElseThrow(() -> new EntityNotFoundException("Country not found with ID: " + id));
+
+        // Update the fields of the countryModel with the fields from countryDTO
+
+//        countryRepository.save(countryModel);
+//        return countryDTO;
+//    }
+
     public CountryDTO updateCountry(Long id, CountryDTO countryDTO) {
         CountryModel countryModel = countryRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Country not found with ID: " + id));
@@ -89,22 +103,13 @@ public class CountryService {
         return countryDTO;
     }
 
-//    public void updateCountry(Long id, CountryDTO countryDTO) {
-//        CountryModel countryModel = countryRepository.findById(id)
-//                .orElseThrow(() -> new EntityNotFoundException("Country not found with ID: " + id));
-//
-//        // Update the fields of the countryModel with the fields from countryDTO
-//
-//        countryRepository.save(countryModel);
+
+//    public void deleteCountry(Long id) {
+//        if (!countryRepository.existsById(id)) {
+//            throw new EntityNotFoundException("Country not found with ID: " + id);
+//        }
+//        countryRepository.deleteById(id);
 //    }
-
-
-    public void deleteCountry(Long id) {
-        if (!countryRepository.existsById(id)) {
-            throw new EntityNotFoundException("Country not found with ID: " + id);
-        }
-        countryRepository.deleteById(id);
-    }
 
 
 }

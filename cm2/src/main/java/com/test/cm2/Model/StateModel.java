@@ -21,7 +21,7 @@ public class StateModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_state")
-    @SequenceGenerator(name = "seq_country", sequenceName = "seq_state", allocationSize = 1)
+    @SequenceGenerator(name = "seq_state", sequenceName = "seq_state", allocationSize = 1)
     private Long StateId;
 
     @NonNull

@@ -6,6 +6,9 @@ import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
 
+import java.util.HashSet;
+import java.util.Set;
+
 
 @Entity
 @Getter
@@ -24,8 +27,8 @@ public class City {
     private StateModel state;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_state")
-    @SequenceGenerator(name = "seq_country", sequenceName = "seq_state", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_city")
+    @SequenceGenerator(name = "seq_city", sequenceName = "seq_city", allocationSize = 1)
     private Long CityId;
 
     @NonNull
@@ -44,7 +47,8 @@ public class City {
     @Column(nullable = false)
     private Boolean isActive;
 
-
+    @ManyToMany(mappedBy = "cities")
+    private Set<Institute> institutes = new HashSet<>();
 
 }
 

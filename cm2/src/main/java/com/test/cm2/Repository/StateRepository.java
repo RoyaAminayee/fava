@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 import java.util.List;
 
+
 public interface StateRepository extends JpaRepository<StateModel, Long>, JpaSpecificationExecutor<StateModel> {
     List<StateModel> findByCountryId(Long countryId);
 }
+
