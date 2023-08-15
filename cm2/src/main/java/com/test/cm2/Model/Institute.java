@@ -28,9 +28,9 @@ public class Institute {
     @ManyToMany
     @JoinTable(
             name = "institute_city",
-            joinColumns = @JoinColumn(name = "institute_id"),
-            inverseJoinColumns = @JoinColumn(name = "city_id")
+            joinColumns = @JoinColumn(name = "institute_id",referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "city_id",referencedColumnName = "id")
     )
-    private Set<City> cities = new HashSet<>();
+    private Set<City> cities;
 
 }

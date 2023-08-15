@@ -8,7 +8,7 @@ import java.io.Serializable;
 @Getter
 @Setter
 public class CityDTO implements Serializable {
-    private Long cityId;
+    private Long id;
     private Long stateId;
     private Long countryId;
     private String cityTitle;

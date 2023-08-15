@@ -20,5 +20,5 @@ public class InstituteDTO implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-//    private List<Long> cityIds;
+    private Set<Long> cityIds;
 }

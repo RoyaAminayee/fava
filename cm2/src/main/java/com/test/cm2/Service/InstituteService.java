@@ -20,16 +20,7 @@ public class InstituteService {
     private final InstituteRepository instituteRepository;
     private final InstituteMapper instituteMapper;
     private final CityRepository cityRepository;
-
-//    public Institute createInstitute(Institute institute) {
-//        return instituteRepository.save(institute);
-//    }
-
-//
-//    public List<InstituteDTO> createInstitute(List<InstituteDTO> instituteDTO, Long City_id) {
-//
-//        return (List<InstituteDTO>) instituteMapper.toDTO((Institute) savedInstitute);
-//    }
+    private final CityService cityService;
 
 
 
@@ -40,98 +31,41 @@ public class InstituteService {
     }
 
 
-//
-//        public Page<InstituteDTO> getAllInstitutes(Pageable pageable) {
-//        Page<Institute> institutePage = instituteRepository.findAll(pageable);
-//        return institutePage.map(instituteMapper::toDTO);
-//    }
-
-
     public List<InstituteDTO> getAllInstitutes() {
         List<Institute> instituteModels = instituteRepository.findAll();
         return instituteMapper.toDTOList(instituteModels);
     }
 
 
-//    public Institute updateInstitute(Long id, Institute institute) {
-//        Institute existingInstitute = getInstituteById(id);
-//        // Perform the update logic here with institute's fields
-//        return instituteRepository.save(existingInstitute);
-//    }
-
-
-//    public InstituteDTO updateInstitute(Long id, InstituteDTO instituteDTO) {
-//        Institute instituteModel = instituteRepository.findById(id)
-//                .orElseThrow(() -> new EntityNotFoundException("institute not found with ID: " + id));
-//
-//
-//        instituteRepository.save(instituteModel);
-//        return instituteDTO;
-//    }
-
-
-    public void deleteInstitute(Long id) {
-        if (!instituteRepository.existsById(id)) {
-            throw new EntityNotFoundException("Country not found with ID: " + id);
-        }
-        instituteRepository.deleteById(id);
+    public void createInstitute(InstituteDTO instituteDTO) {
+        Institute institute = instituteMapper.toEntity(instituteDTO);
+        institute.setCities(cityService.getAllCities(instituteDTO.getCityIds()));
+        instituteRepository.save(institute);
     }
-////////////////    havasaet bashe bayad az city ha ham hazf she
 
 
-//    public InstituteDTO updateInstituteCities(Long id, List<Long> cityIds) {
-//        Institute instituteModel = instituteRepository.findById(id)
-//                .orElseThrow(() -> new EntityNotFoundException("Institute not found with ID: " + id));
-//
-//        Set<City> updatedCities = new HashSet<>();
-//        for (Long cityId : cityIds) {
-//            City city = cityRepository.findById(cityId)
-//                    .orElseThrow(() -> new EntityNotFoundException("City not found with ID: " + cityId));
-//            updatedCities.add(city);
-//        }
-//
-//        instituteModel.setCities(updatedCities);
-//        instituteRepository.save(instituteModel);
-//
-//        return instituteMapper.toDTO(instituteModel);
-//    }
 
-
-//        private final CityRepository cityRepository;
-
-
-//        public InstituteDTO updateInstituteCities(Long id, List<Long> cityIds) {
-//            Institute instituteModel = instituteRepository.findById(id)
-//                    .orElseThrow(() -> new EntityNotFoundException("Institute not found with ID: " + id));
-//
-//            Set<City> updatedCities = new HashSet<>();
-//            for (Long cityId : cityIds) {
-//                City city = cityRepository.findById(cityId)
-//                        .orElseThrow(() -> new EntityNotFoundException("City not found with ID: " + cityId));
-//                updatedCities.add(city);
-//            }
-//
-//            instituteModel.setCities(updatedCities);
-//            Institute savedInstitute = instituteRepository.save(instituteModel);
-//
-//            return instituteMapper.toDTO(savedInstitute);
-//        }
-
-
-    public InstituteDTO addCitiesToInstitute(Long instituteId, List<Long> cityIds) {
-        Institute instituteModel = instituteRepository.findById(instituteId)
+    public void deleteCitiesFromInstitute(Long instituteId, Set<Long> cityIds) {
+        Institute institute = instituteRepository.findById(instituteId)
                 .orElseThrow(() -> new EntityNotFoundException("Institute not found with ID: " + instituteId));
 
-        Set<City> cities = new HashSet<>();
-        for (Long cityId : cityIds) {
-            City city = cityRepository.findById(cityId)
-                    .orElseThrow(() -> new EntityNotFoundException("City not found with ID: " + cityId));
-            cities.add(city);
-        }
+        Set<City> citiesToDelete = cityRepository.findAllByIds(cityIds);
+        institute.getCities().removeAll(citiesToDelete);
 
-        instituteModel.setCities(cities);
-        Institute updatedInstitute = instituteRepository.save(instituteModel);
-        return instituteMapper.toDTO(updatedInstitute);
+        instituteRepository.save(institute);
     }
+
+    public void updateCitiesOfInstitute(Long instituteId, Set<Long> CityIds) {
+        Institute institute = instituteRepository.findById(instituteId)
+                .orElseThrow(() -> new IllegalArgumentException("Institute not found with ID: " + instituteId));
+
+        Set<City> newCities = cityRepository.findAllByIds(CityIds);
+        institute.setCities(newCities);
+
+        instituteRepository.save(institute);
+    }
+
+
+
 
 }

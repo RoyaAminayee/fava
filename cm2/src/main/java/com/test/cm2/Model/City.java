@@ -15,21 +15,20 @@ import java.util.Set;
 @Setter
 @Table(name = "city")
 public class City {
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_city")
+    @SequenceGenerator(name = "seq_city", sequenceName = "seq_city", allocationSize = 1)
+    private Long id;
 
     @JsonBackReference
     @ManyToOne
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "country_id")
     private CountryModel country;
 
     @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "state_id")
     private StateModel state;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_city")
-    @SequenceGenerator(name = "seq_city", sequenceName = "seq_city", allocationSize = 1)
-    private Long CityId;
 
     @NonNull
     @Column(nullable = false)
@@ -48,7 +47,7 @@ public class City {
     private Boolean isActive;
 
     @ManyToMany(mappedBy = "cities")
-    private Set<Institute> institutes = new HashSet<>();
+    private Set<Institute> institutes;
 
 }
 

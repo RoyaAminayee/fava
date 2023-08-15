@@ -1,6 +1,7 @@
 package com.test.cm2.Controller;
 
 import com.test.cm2.DTO.CityDTO;
+import com.test.cm2.DTO.InstituteDTO;
 import com.test.cm2.Service.CityService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -21,17 +22,17 @@ public class CityController {
         return ResponseEntity.status(HttpStatus.CREATED).body(createdCity);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<CityDTO> getCityById(@PathVariable Long id) {
-        CityDTO cityDTO = cityService.getCityById(id);
-        return ResponseEntity.ok(cityDTO);
-    }
+//    @GetMapping("/{id}")
+//    public ResponseEntity<CityDTO> getCityById(@PathVariable Long id) {
+//        CityDTO cityDTO = cityService.getCityById(id);
+//        return ResponseEntity.ok(cityDTO);
+//    }
 
-    @GetMapping
-    public ResponseEntity<List<CityDTO>> getAllCities() {
-        List<CityDTO> cities = cityService.getAllCities();
-        return ResponseEntity.ok(cities);
-    }
+//    @GetMapping
+//    public ResponseEntity<List<CityDTO>> getAllCities(InstituteDTO instituteDTO) {
+//        cityService.getAllCities(instituteDTO);
+//        return ResponseEntity.ok(cities);
+//    }
 
     @PutMapping("/{id}")
     public ResponseEntity<CityDTO> updateCity(@PathVariable Long id, @RequestBody CityDTO cityDTO) {

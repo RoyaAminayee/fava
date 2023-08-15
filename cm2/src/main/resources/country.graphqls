@@ -1,0 +1,10 @@
+type Country {
+  id: ID!
+  title: String!
+  latinTitle: String!
+  description: String!
+}
+
+type Query {
+  getAllCountries: [Country!]!
+}

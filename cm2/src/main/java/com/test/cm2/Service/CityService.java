@@ -8,7 +8,10 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -22,15 +25,21 @@ public class CityService {
         return cityMapper.toDTO(savedCity);
     }
 
-    public CityDTO getCityById(Long id) {
+//    public CityDTO getCityById(Long id) {
+//        City cityModel = cityRepository.findById(id)
+//                .orElseThrow(() -> new EntityNotFoundException("City not found with ID: " + id));
+//        return cityMapper.toDTO(cityModel);
+//    }
+
+        public City getCityById(Long id) {
         City cityModel = cityRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("City not found with ID: " + id));
-        return cityMapper.toDTO(cityModel);
+        return cityModel;
     }
 
-    public List<CityDTO> getAllCities() {
-        List<City> cityModels = cityRepository.findAll();
-        return cityMapper.toDTOList(cityModels);
+    public Set<City> getAllCities(Set<Long> ids) {
+        Set<City> allById = cityRepository.findAllByIds(ids);
+        return allById;
     }
 
     public CityDTO updateCity(Long id, CityDTO cityDTO) {
