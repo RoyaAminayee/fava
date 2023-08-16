@@ -23,7 +23,6 @@ public class InstituteService {
     private final CityService cityService;
 
 
-
     public InstituteDTO getInstituteById(Long id) {
         Institute instituteModel = instituteRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Institute not found with ID: " + id));
@@ -44,8 +43,7 @@ public class InstituteService {
     }
 
 
-
-    public void deleteCitiesFromInstitute(Long instituteId, Set<Long> cityIds) {
+    public void deleteCitiesOfInstitute(Long instituteId, Set<Long> cityIds) {
         Institute institute = instituteRepository.findById(instituteId)
                 .orElseThrow(() -> new EntityNotFoundException("Institute not found with ID: " + instituteId));
 
@@ -55,16 +53,32 @@ public class InstituteService {
         instituteRepository.save(institute);
     }
 
-    public void updateCitiesOfInstitute(Long instituteId, Set<Long> CityIds) {
-        Institute institute = instituteRepository.findById(instituteId)
-                .orElseThrow(() -> new IllegalArgumentException("Institute not found with ID: " + instituteId));
 
-        Set<City> newCities = cityRepository.findAllByIds(CityIds);
-        institute.setCities(newCities);
+
+    public void updateCitiesOfInstitute(Long instituteId, Set<Long> newCityIds) {
+        Institute institute = instituteRepository.findById(instituteId)
+                .orElseThrow(() -> new EntityNotFoundException("Institute not found with ID: " + instituteId));
+
+        Set<City> existingCities = institute.getCities();
+
+        Set<City> newCities = cityRepository.findAllByIds(newCityIds);
+
+        // Calculate the cities to add (newCities - existingCities)
+        Set<City> citiesToAdd = newCities;
+        citiesToAdd.removeAll(existingCities);
+
+        // Calculate the cities to remove (existingCities - newCities)
+        Set<City> citiesToRemove = existingCities;
+        citiesToRemove.removeAll(newCities);
+
+        // Add new cities
+        institute.getCities().addAll(citiesToAdd);
+
+        // Remove cities that are no longer in the new set
+        institute.getCities().removeAll(citiesToRemove);
 
         instituteRepository.save(institute);
     }
-
 
 
 

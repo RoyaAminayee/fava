@@ -41,7 +41,7 @@ public class InstituteController {
     public void deleteCitiesFromInstitute(
             @PathVariable Long instituteId,
             @PathVariable Set<Long> cityIds) {
-        instituteService.deleteCitiesFromInstitute(instituteId, cityIds);
+        instituteService.deleteCitiesOfInstitute(instituteId, cityIds);
     }
 
     @PutMapping("/{instituteId}/{cityIds}")
