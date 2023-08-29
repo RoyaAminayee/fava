@@ -3,7 +3,7 @@ package com.test.cm2.Controller;
 
 import com.test.cm2.DTO.StateDTO;
 //import com.test.cm2.Service.CountryService;
-import com.test.cm2.Service.StateService;
+import com.test.cm2.DTO.Service.StateService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

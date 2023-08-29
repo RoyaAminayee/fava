@@ -1,14 +1,11 @@
 package com.test.cm2.Controller;
 
 import com.test.cm2.DTO.CityDTO;
-import com.test.cm2.DTO.InstituteDTO;
-import com.test.cm2.Service.CityService;
+import com.test.cm2.DTO.Service.CityService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/city")

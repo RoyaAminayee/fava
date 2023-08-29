@@ -10,9 +10,13 @@ import lombok.Setter;
 import java.io.Serializable;
 
 @Data
+
 public class CountryDTO extends BaseDTO implements Serializable {
 
+//    @ApiModelProperty(required = true, hidden = false)
     private String title;
     private String latinTitle;
     private String description;
+
+
 }

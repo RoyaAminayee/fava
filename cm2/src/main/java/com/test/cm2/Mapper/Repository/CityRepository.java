@@ -1,4 +1,4 @@
-package com.test.cm2.Repository;
+package com.test.cm2.Mapper.Repository;
 
 import com.test.cm2.Model.City;
 import com.test.cm2.Model.CountryModel;

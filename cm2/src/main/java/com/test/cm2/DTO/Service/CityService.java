@@ -1,17 +1,15 @@
-package com.test.cm2.Service;
+package com.test.cm2.DTO.Service;
 
 import com.test.cm2.DTO.CityDTO;
 import com.test.cm2.Mapper.CityMapper;
 import com.test.cm2.Model.City;
-import com.test.cm2.Repository.CityRepository;
+import com.test.cm2.Mapper.Repository.CityRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -58,6 +56,16 @@ public class CityService {
         }
         cityRepository.deleteById(id);
     }
+
+
+    public List<City> getCitiesWithCriteria(String keyword) {
+        return cityRepository.findAll((root, query, criteriaBuilder) ->
+                criteriaBuilder.like(criteriaBuilder.lower(root.get("name")), "%" + keyword.toLowerCase() + "%")
+        );
+    }
+
 }
+
+
 
 

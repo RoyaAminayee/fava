@@ -1,4 +1,4 @@
-package com.test.cm2.Repository;
+package com.test.cm2.Mapper.Repository;
 
 import com.test.cm2.Model.Institute;
 import org.springframework.data.jpa.repository.JpaRepository;

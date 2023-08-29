@@ -2,9 +2,9 @@ package com.test.cm2.Controller;
 
 import com.test.cm2.DTO.InstituteDTO;
 //import com.test.cm2.Service.CountryService;
-import com.test.cm2.Service.InstituteService;
+import com.test.cm2.Model.Institute;
+import com.test.cm2.DTO.Service.InstituteService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -49,6 +49,14 @@ public class InstituteController {
             @PathVariable Long instituteId,
             @PathVariable Set<Long> cityIds) {
         instituteService.updateCitiesOfInstitute(instituteId, cityIds);
+    }
+
+    @GetMapping("/search")
+    public List<Institute> searchInstitutes(
+            @RequestParam String Title,
+            @RequestParam String name
+    ) {
+        return instituteService.getInstitutesByCityCriteria(Title, name);
     }
 
 }

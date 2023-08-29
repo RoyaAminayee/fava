@@ -11,7 +11,6 @@ import java.util.Set;
 @Getter
 @Setter
 @Table(name = "institute")
-
 public class Institute {
 
     @Id

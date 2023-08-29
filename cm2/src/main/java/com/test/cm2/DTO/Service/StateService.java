@@ -1,18 +1,15 @@
-package com.test.cm2.Service;
+package com.test.cm2.DTO.Service;
 
-import com.test.cm2.DTO.CountryDTO;
 import com.test.cm2.DTO.StateDTO;
 
 import com.test.cm2.Mapper.StateMapper;
-import com.test.cm2.Model.CountryModel;
 import com.test.cm2.Model.StateModel;
 
-import com.test.cm2.Repository.StateRepository;
+import com.test.cm2.Mapper.Repository.StateRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import javax.swing.plaf.nimbus.State;
 import java.util.List;
 
 
